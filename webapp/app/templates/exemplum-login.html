@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+    <style type="text/css">
+        @font-face {
+        font-family: logofont;
+        src: url(../static/Bungee-Regular.ttf);
+        }
+        @font-face {
+            font-family: mainfont;
+            src: url(../static/Poppins-Italic.ttf);
+        }
+    
+        </style>
+    <head>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='exemplum.css') }}"/>
+        
+        <title>Home</title>
+    </head>
+
+    <body>
+
+
+    <div class="topnav">
+        <div class="title">
+        <h1>Exemplum</h1>   
+        </div>
+    </div>
+
+    <div class="loginbox">
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            
+                <h3>Log In</h3>
+                <p>Username</p>
+                 
+                 {% if form.username.errors %}
+                    {{ form.username(style="line-height: 30px;border-radius: 5px;width:250px;") }}
+
+                    {% for error in form.username.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                    {% else %}
+                        {{ form.username(style="line-height: 30px;border-radius: 5px;width:250px;") }}
+
+                 {% endif %}
+
+                 <p>Password</p>
+                {% if form.password.errors %}
+                    {{ form.password(style="line-height: 30px;border-radius: 5px;width:250px;") }}
+
+                    {% for error in form.password.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                    
+                    {% else %}
+                    {{ form.password(style="line-height: 30px;border-radius: 5px;width:250px;") }}<br>
+
+                {% endif %}
+                {{ form.remember() }}
+                {{ form.remember.label() }}
+                 <br>
+            {{ form.submit(class="loginbtn") }}
+
+            <p style="font-size: 10px;"><a href="{{ url_for('create_account') }}">Sign Up</a></p><br>
+        
+        <!--
+        <h3>Log into Exemplum</h3>
+        <p>Username</p>
+        <input type="text" size="30" style="line-height: 30px;border-radius: 5px;width:250px;" maxlength=64 name="username" id="newinfo">
+        <p>Password</p>
+        <input type="password" size="30" style="line-height: 30px;border-radius: 5px;width:250px;" minlength=64 maxlength=64 name="password" id="newinfo"><br>
+        <br><button type="button" class="loginbtn">Log in</button><br>
+        <p style="font-size: 10px;"><a href="../templates/exemplum-signup.html">Don't have an account?</a></p>
+        
+        <br>-->
+    </div>
+   
+
+    </body>
+</html>

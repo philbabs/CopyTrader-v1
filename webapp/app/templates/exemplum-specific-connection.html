@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+    <html>
+    <style type="text/css">
+    @font-face {
+    font-family: logofont;
+    src: url(../static/Bungee-Regular.ttf);
+    }
+    @font-face {
+        font-family: mainfont;
+        src: url(../static/Poppins-Italic.ttf);
+    }
+    </style>
+    <head>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='exemplum.css') }}"/>
+        <title>Home</title>
+    </head>
+    
+    <body>
+
+
+    <div class="topnav">
+        <div class="title">
+        <h1>Exemplum</h1>   
+        </div>
+    </div>
+
+
+    <div class="leftbox">
+        <div class="profilebox">
+            <img src="../static/icons/user-icon.png" style="float:left; left: 100px;width:100px; height: 100px">
+            
+            <p>{{ current_user.username }}</p>
+            <div class="floatright">
+            <div class="dropdown">
+                <button class="dropbtn"><img src="../static/icons/settings-icon.png" style="float: right; right: -100px; width:25px; height:25px"></button>
+                <div class="dropdown-content">
+                <a href="{{url_for('account')}}">Account</a>
+                <a href="{{url_for('logout')}}" style="background-color:  #FF7272;">Log out</a>
+
+                </div>
+            </div>
+        </div>
+        </div>
+        
+        <p style="padding-left: 20px;">CONNECTIONS</p>
+        
+        <!-- Rounded switch -->
+        <div class="onoroff">
+            <label class="switch">
+            <input type="checkbox">
+            <span class="slider round"></span>
+            </label>
+        </div>
+        {% for connection in connections %}
+        <div class="connection">
+            <img src="../static/icons/order_status_done.png" style="position:relative; top: 20px;float: left; left: 5px;width: 15px; height: 15px;">
+            
+            <a href="{{ url_for('specific_connection', connection_id=connection.id) }}"><p style="position:relative; left: 25px;">{{ connection.name }}</p></a>
+            <div class="connectionswitch">
+            <label class="switch">
+                <input type="checkbox">
+                <span class="slider round"></span>
+                </label>
+            </div>
+
+        </div><br>
+        {% endfor %}
+
+        <div class="addbox">
+            <a href="{{ url_for('new_connection') }}"><img src="../static/icons/addicon.png" style="position:relative; display: block;margin-left: auto;margin-right: auto; width: 45px; height: 45px;top: 7.5px;"></a>
+        </div>
+        
+    </div> <!-- End Left Box-->
+
+
+    <div class="mainbox">
+        <div class="createnewconnectionarea">
+    <h1> {{ sp_connection.name }}</h1>
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <p>Change Information on connection</p> 
+            <p>Name</p>
+                
+             {% if form.name.errors %}
+                {{ form.name(style="line-height: 30px;border-radius: 5px;width:250px;") }}
+
+                {% for error in form.name.errors %}
+                    <span>{{ error }}</span>
+                {% endfor %}
+                {% else %}
+                    {{ form.name(style="line-height: 30px;border-radius: 5px;width:250px;") }}
+
+             {% endif %}
+
+             <p>Key</p>
+             
+             {% if form.key.errors %}
+                {{ form.key(style="line-height: 30px;border-radius: 5px;width:250px;") }}
+
+                {% for error in form.key.errors %}
+                    <span>{{ error }}</span>
+                {% endfor %}
+                {% else %}
+                    {{ form.key(style="line-height: 30px;border-radius: 5px;width:250px;") }}
+
+             {% endif %}
+             <p>Secret</p>
+             
+             {% if form.secret.errors %}
+                {{ form.secret(style="line-height: 30px;border-radius: 5px;width:250px;") }}
+
+                {% for error in form.secret.errors %}
+                    <span>{{ error }}</span>
+                {% endfor %}
+                {% else %}
+                    {{ form.secret(style="line-height: 30px;border-radius: 5px;width:250px;") }}
+
+             {% endif %}<br>
+             <br>
+        {{ form.submit(class="loginbtn") }}<br><br>
+        
+           
+    
+        <br>
+        
+    
+        
+    </form>
+    <form action="{{ url_for('delete_connection',connection_id=sp_connection.id) }}">
+    <input type="submit" class="loginbtn" value="Delete" style="background-color: #FF4E4E;"></input><br>        </form> 
+    </div>
+    <div class="createnewaccountinfo">
+        {% for coin in coins %}
+        <p>{{ coin }}</p>
+        <div class="connectionswitch">
+            <label class="switch">
+                <input type="checkbox">
+                <span class="slider round"></span>
+                </label>
+            </div>
+        {% endfor %}
+    </div>
+    </div> <!-- End Main Box-->
+ 
+    </body>
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+    <html>
+    <style type="text/css">
+    @font-face {
+    font-family: logofont;
+    src: url(../static/Bungee-Regular.ttf);
+    }
+    @font-face {
+        font-family: mainfont;
+        src: url(../static/Poppins-Italic.ttf);
+    }
+    </style>
+    <head>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='exemplum.css') }}"/>
+        <title>Home</title>
+    </head>
+    
+    <body>
+
+
+    <div class="topnav">
+        <div class="title">
+        <h1>Exemplum</h1>   
+        </div>
+    </div>
+
+
+    <div class="leftbox">
+        <div class="profilebox">
+            <img src="../static/icons/user-icon.png" style="float:left; left: 100px;width:100px; height: 100px">
+            
+            <p>{{ current_user.username }}</p>
+            <div class="floatright">
+            <div class="dropdown">
+                <button class="dropbtn"><img src="../static/icons/settings-icon.png" style="float: right; right: -100px; width:25px; height:25px"></button>
+                <div class="dropdown-content">
+                <a href="{{url_for('account')}}">Account</a>
+                <a href="{{url_for('logout')}}" style="background-color:  #FF7272;">Log out</a>
+
+                </div>
+            </div>
+        </div>
+        </div>
+        
+        <p style="padding-left: 20px;">CONNECTIONS</p>
+        
+        <!-- Rounded switch -->
+        <div class="onoroff">
+            <label class="switch">
+            <input type="checkbox">
+            <span class="slider round"></span>
+            </label>
+        </div>
+        {% for connection in connections %}
+        <div class="connection">
+            <img src="../static/icons/order_status_done.png" style="position:relative; top: 20px;float: left; left: 5px;width: 15px; height: 15px;">
+            
+            <a href="{{ url_for('specific_connection', connection_id=connection.id) }}"><p style="position:relative; left: 25px;">{{ connection.name }}</p></a>
+            <div class="connectionswitch">
+            <label class="switch">
+                <input type="checkbox">
+                <span class="slider round"></span>
+                </label>
+            </div>
+
+        </div><br>
+        {% endfor %}
+
+        <div class="addbox">
+            <a href="{{ url_for('new_connection') }}"><img src="../static/icons/addicon.png" style="position:relative; display: block;margin-left: auto;margin-right: auto; width: 45px; height: 45px;top: 7.5px;"></a>
+        </div>
+        
+    </div> <!-- End Left Box-->
+
+
+    <div class="mainbox">
+        <div class="createnewconnectionarea">
+        <h1>Create New Connection</h1>
+        <form method="POST" action="">
+            {{ form.hidden_tag() }} 
+                <p>Name</p>
+                    
+                 {% if form.name.errors %}
+                    {{ form.name(style="line-height: 30px;border-radius: 5px;width:250px;") }}
+
+                    {% for error in form.name.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                    {% else %}
+                        {{ form.name(style="line-height: 30px;border-radius: 5px;width:250px;") }}
+
+                 {% endif %}
+
+                 <p>Key</p>
+                 
+                 {% if form.key.errors %}
+                    {{ form.key(style="line-height: 30px;border-radius: 5px;width:250px;") }}
+
+                    {% for error in form.key.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                    {% else %}
+                        {{ form.key(style="line-height: 30px;border-radius: 5px;width:250px;") }}
+
+                 {% endif %}
+                 <p>Secret</p>
+                 
+                 {% if form.secret.errors %}
+                    {{ form.secret(style="line-height: 30px;border-radius: 5px;width:250px;") }}
+
+                    {% for error in form.secret.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                    {% else %}
+                        {{ form.secret(style="line-height: 30px;border-radius: 5px;width:250px;") }}
+
+                 {% endif %}<br>
+                 <br>
+            {{ form.submit(class="loginbtn") }}<br><br>
+
+            <br>
+            
+        
+            
+        </form>
+    </div>
+        <!--
+        <p>Name</p>
+        <input type="text" size="30" style="line-height: 30px;border-radius: 5px;width:250px;" maxlength=64 name="name" id="newinfo">
+        <p>Key</p>
+        <input type="text" size="30" style="line-height: 30px;border-radius: 5px;width:250px;" minlength=64 maxlength=64 name="key" id="newinfo">
+        <p>Secret</p>
+        <input type="text" size="30" style="line-height: 30px;border-radius: 5px;width:250px;" minlength=64 maxlength=64 name="secret" id="newinfo"><br>
+        <br><button type="button" class="loginbtn">Create</button>
+        -->
+        <div class="createnewaccountinfo">
+
+            <p> 1. Name - The name you want to give to the connection.</p>
+            <p> 2. Key - The key is provided to you when you create your Binance API. </p>
+            <p>3. Secret - The secret is also provided, but only shown once, if you lose it you will never get it back but it's not difficult to make another API.</p>
+            <p>4. Please be careful with your API keys. They are all that is needed for someone to access your account. Only give them to people you trust with your money. If you ever lose your keys or are worried that someone that you do not trust might have them DELETE YOUR API on the Binance application.</p>
+            <p>5. Look below to see how you create your Binance API.</p>
+        </div>
+        </div>
+        
+
+        <!--
+        <p style="position:relative; left:25px;width:300px;height:100px;top:30px; ">1. In your navigation bar on the Bianance application hover your cursor above on the icon that is shown in the picture, Then click API Management.</p>
+
+        <br><img src="../icons/binanceinfo2.png" style="position: relative; left:-200px;top: 100px; box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.33);">
+
+        <p style="position:relative; float:right; right: 200px;width:300px;height:100px;top:30px; ">2. Name your new API and click create.</p>
+
+        <br><img src="../icons/binanceinfo3.png" style="position: relative; float:right;top: 100px; box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.33);">
+
+        
+        <br><img src="../icons/binanceinfo.png" style="position: relative; left:2.5%; top: 20px; width: 1400px; height: 554px; box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.33);">
+         <p>ojdsaosjfs</p>
+        
+        -->  
+    </div> <!-- End Main Box-->
+ 
+    </body>
+</html>

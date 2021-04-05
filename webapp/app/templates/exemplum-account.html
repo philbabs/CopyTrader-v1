@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+    <style type="text/css">
+        @font-face {
+        font-family: logofont;
+        src: url(../static/Bungee-Regular.ttf);
+        }
+        @font-face {
+            font-family: mainfont;
+            src: url(../static/Poppins-Italic.ttf);
+        }
+    
+        </style>
+    <head>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='exemplum.css') }}"/>
+        
+        <title>Home</title>
+    </head>
+
+    <body>
+
+
+    <div class="topnav">
+        <div class="title">
+        <h1>Exemplum</h1>   
+        </div>
+    </div>
+
+    <div class="loginbox">
+        <h3>Account</h3>
+        <p> {{ current_user.username }} </p>
+        <p>Change Information</p>
+        <form method="POST" action="">
+            <p>Username</p>
+            {{ form.hidden_tag() }}         
+                 {% if form.username.errors %}
+                    {{ form.username(style="line-height: 30px;border-radius: 5px;width:250px;") }}
+
+                    {% for error in form.username.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                    {% else %}
+                        {{ form.username(style="line-height: 30px;border-radius: 5px;width:250px;") }}
+
+                 {% endif %}
+
+                 <p>Key</p>
+                 
+                 {% if form.user_key.errors %}
+                    {{ form.user_key(style="line-height: 30px;border-radius: 5px;width:250px;") }}
+
+                    {% for error in form.user_key.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                    {% else %}
+                        {{ form.user_key(style="line-height: 30px;border-radius: 5px;width:250px;") }}
+
+                 {% endif %}
+                 <p>Secret</p>
+                 
+                 {% if form.user_secret.errors %}
+                    {{ form.user_secret(style="line-height: 30px;border-radius: 5px;width:250px;") }}
+
+                    {% for error in form.user_secret.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                    {% else %}
+                        {{ form.user_secret(style="line-height: 30px;border-radius: 5px;width:250px;") }}
+
+                 {% endif %}<br>
+                 <br>
+            {{ form.submit(class="loginbtn") }}<br><br>
+            <a href="{{ url_for('home')}}"><button type="button" class="loginbtn" style="background-color: #FF4E4E;">Cancel</button></a><br>
+            <br>
+            
+        
+            
+        </form>
+    </div>
+    </div>
+   
+
+    </body>
+</html>
